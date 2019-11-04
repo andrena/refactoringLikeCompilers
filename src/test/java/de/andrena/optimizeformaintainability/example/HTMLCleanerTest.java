@@ -22,6 +22,11 @@ class HTMLCleanerTest {
 		void illegalUnicode() throws Exception {
 			assertThrows(TokenizeException.class, () -> cleaner.tokenize("" + (char) 888));
 		}
+		
+		@Test
+		void emptyString() throws Exception {
+			assertThat(cleaner.tokenize("")).isEmpty();
+		}
 
 		@Test
 		void plainStrings() throws Exception {
