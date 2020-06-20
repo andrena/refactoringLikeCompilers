@@ -17,6 +17,7 @@ public class SimpleWhileLoopsTest {
 	@Test
 	void testPadWithSpaces() throws Exception {
 		assertThat(loops.padWithSpaces(10, "text")).isEqualTo("      text");
+		assertThat(loops.padWithSpaces(10, "0123456789A")).isEqualTo("0123456789A");
 	}
 
 }

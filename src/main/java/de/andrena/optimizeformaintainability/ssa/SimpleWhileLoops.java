@@ -16,7 +16,7 @@ public class SimpleWhileLoops {
 
 	String padWithSpaces(int length, String text) {
 		String padded = Stream.iterate(text, this::padSpace)
-			.filter(c -> c.length() == length)
+			.filter(c -> c.length() >= length)
 			.limit(1)
 			.findFirst()
 			.orElseThrow(RuntimeException::new);
@@ -51,7 +51,7 @@ class SimpleWhileLoops2 {
 		UnaryOperator<String> padSpace = s -> " " + s;
 		
 		String padded = Stream.iterate(text, padSpace)
-			.filter(c -> c.length() == length)
+			.filter(c -> c.length() >= length)
 			.limit(1)
 			.findFirst()
 			.orElseThrow(RuntimeException::new);
