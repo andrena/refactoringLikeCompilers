@@ -13,22 +13,175 @@ package de.andrena.optimizeformaintainability.ssa;
 public class ComplexConditionals {
 
 	int area(String type, int... arguments) {
-		Rect rect = rectangleFrom(type, arguments);
-		return rect.width * rect.height;
+		Rect r = rectFrom(type, arguments);
+
+		return r.width * r.height;
 	}
 
-	private Rect rectangleFrom(String type, int[] arguments) {
+	private Rect rectFrom(String type, int... arguments) {
 		if (type.equals("square")) {
-			return new Rect(arguments[0], arguments[0]);
+			return new Rect(arguments[0],arguments[0]);
 		} else if (type.equals("rectangle")) {
-			return new Rect(arguments[0], arguments[1]);
+			return new Rect(arguments[0],arguments[1]);
+		} else {
+			return new Rect(0,0);
 		}
-		return new Rect(0, 0);
 	}
 
-	public static class Rect {
+	static class Rect {
 		final int width;
 		final int height;
+
+		public Rect(int width, int height) {
+			this.width = width;
+			this.height = height;
+		}
+
+	}
+}
+
+class ComplexConditionals5 {
+
+	int area(String type, int... arguments) {
+		Rect r = rectFrom(type, arguments);
+
+		return r.width * r.height;
+	}
+
+	private Rect rectFrom(String type, int... arguments) {
+		if (type.equals("square")) {
+			Rect r = new Rect(0,0);
+			r = new Rect(arguments[0],arguments[0]);
+			return r;
+		} else if (type.equals("rectangle")) {
+			Rect r = new Rect(0,0);
+			r = new Rect(arguments[0],arguments[1]);
+			return r;
+		} else {
+			Rect r = new Rect(0,0);
+			return r;
+		}
+	}
+
+	static class Rect {
+		final int width;
+		final int height;
+
+		public Rect(int width, int height) {
+			this.width = width;
+			this.height = height;
+		}
+
+	}
+}
+
+class ComplexConditionals4 {
+
+	int area(String type, int... arguments) {
+		Rect r = rectFrom(type, arguments);
+
+		return r.width * r.height;
+	}
+
+	private Rect rectFrom(String type, int... arguments) {
+		Rect r = new Rect(0,0);
+
+		if (type.equals("square")) {
+			r = new Rect(arguments[0],arguments[0]);
+		} else if (type.equals("rectangle")) {
+			r = new Rect(arguments[0],arguments[1]);
+		}
+		return r;
+	}
+
+	static class Rect {
+		final int width;
+		final int height;
+
+		public Rect(int width, int height) {
+			this.width = width;
+			this.height = height;
+		}
+
+	}
+}
+
+class ComplexConditionals3 {
+
+	int area(String type, int... arguments) {
+		Rect r = new Rect(0,0);
+
+		if (type.equals("square")) {
+			r = new Rect(arguments[0],arguments[0]);
+		} else if (type.equals("rectangle")) {
+			r = new Rect(arguments[0],arguments[1]);
+		}
+
+		return r.width * r.height;
+	}
+
+	static class Rect {
+		final int width;
+		final int height;
+
+		public Rect(int width, int height) {
+			this.width = width;
+			this.height = height;
+		}
+
+	}
+}
+
+class ComplexConditionals2 {
+
+	int area(String type, int... arguments) {
+		Rect r = new Rect(0,0);
+
+		if (type.equals("square")) {
+			r.width = arguments[0];
+			r.height = arguments[0];
+		} else if (type.equals("rectangle")) {
+			r.width = arguments[0];
+			r.height = arguments[1];
+		}
+
+		return r.width * r.height;
+	}
+
+	static class Rect {
+		int width;
+		int height;
+
+		public Rect(int width, int height) {
+			this.width = width;
+			this.height = height;
+		}
+
+	}
+}
+
+class ComplexConditionals1 {
+
+	int area(String type, int... arguments) {
+		int width = 0;
+		int height = 0;
+		@SuppressWarnings("unused")
+		Rect r = new Rect(0,0);
+
+		if (type.equals("square")) {
+			width = arguments[0];
+			height = arguments[0];
+		} else if (type.equals("rectangle")) {
+			width = arguments[0];
+			height = arguments[1];
+		}
+
+		return width * height;
+	}
+
+	static class Rect {
+		int width;
+		int height;
 
 		public Rect(int width, int height) {
 			this.width = width;

@@ -1,5 +1,6 @@
 package de.andrena.optimizeformaintainability.ssa;
 
+import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
 /**
@@ -14,24 +15,62 @@ import java.util.stream.Stream;
 public class SimpleWhileLoops {
 
 	String padWithSpaces(int length, String text) {
-		StringContainer padded = Stream.iterate(new StringContainer(text), this::pad)
-			.filter(c -> c.str.length() == length)
+		String padded = Stream.iterate(text, this::padSpace)
+			.filter(c -> c.length() == length)
 			.limit(1)
 			.findFirst()
 			.orElseThrow(RuntimeException::new);
-		return padded.str;
+		return padded;
+	}
+	
+	String padSpace(String s) {
+		return " " + s;
 	}
 
-	private StringContainer pad(StringContainer padded) {
-		return new StringContainer(" " + padded.str);
-	}
-
-	private static class StringContainer {
-		final String str;
-
-		public StringContainer(String str) {
-			this.str = str;
-		}
-
-	}
 }
+
+class SimpleWhileLoopsJava11 {
+
+	String padWithSpaces(int length, String text) {
+		String padded = Stream.iterate(text, this::padSpace)
+			.dropWhile(s -> s.length() < length)
+			.findFirst()
+			.orElseThrow(RuntimeException::new);
+		return padded;
+	}
+	
+	String padSpace(String s) {
+		return " " + s;
+	}
+
+}
+
+class SimpleWhileLoops2 {
+
+	String padWithSpaces(int length, String text) {
+		UnaryOperator<String> padSpace = s -> " " + s;
+		
+		String padded = Stream.iterate(text, padSpace)
+			.filter(c -> c.length() == length)
+			.limit(1)
+			.findFirst()
+			.orElseThrow(RuntimeException::new);
+		return padded;
+	}
+
+}
+
+class SimpleWhileLoops1 {
+
+	String padWithSpaces(int length, String text) {
+		@SuppressWarnings("unused")
+		UnaryOperator<String> padSpace = s -> " " + s;
+		String padded = text;
+		while (padded.length() < length) {
+			padded = " " + padded;
+		}
+		return padded;
+	}
+
+}
+

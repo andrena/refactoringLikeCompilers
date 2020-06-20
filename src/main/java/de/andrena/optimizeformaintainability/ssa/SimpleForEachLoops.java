@@ -1,6 +1,7 @@
 package de.andrena.optimizeformaintainability.ssa;
 
 import java.util.List;
+import java.util.function.BinaryOperator;
 
 /**
  * A code snippet containing a loop performing the modification of one variable
@@ -14,25 +15,61 @@ import java.util.List;
 public class SimpleForEachLoops {
 
 	String join(List<String> words) {
-		StringContainer joined = words.stream()
-			.reduce(new StringContainer(""), this::join, this::first);
-		return joined.str;
+		return words.stream()
+			.reduce("", this::join);
 	}
 
-	private StringContainer join(StringContainer joined, String word) {
-		return new StringContainer(joined.str + word);
+	String join(String s1, String s2) {
+		return s1 + s2;
 	}
 
-	private StringContainer first(StringContainer c1, StringContainer c2) {
-		return c1;
+}
+
+class SimpleForEachLoops4 {
+
+	String join(List<String> words) {
+		BinaryOperator<String> join = (s1, s2) -> s1 + s2;
+		String joined = words.stream().reduce("", join);
+		return joined;
 	}
 
-	private static class StringContainer {
-		final String str;
+}
 
-		public StringContainer(String str) {
-			this.str = str;
+class SimpleForEachLoops3 {
+
+	String join(List<String> words) {
+		BinaryOperator<String> join = (s1, s2) -> s1 + s2;
+		String joined = "";
+		for (String word : words) {
+			joined = join.apply(joined, word);
 		}
-
+		return joined;
 	}
+
+}
+
+class SimpleForEachLoops2 {
+
+	String join(List<String> words) {
+		String joined = "";
+		@SuppressWarnings("unused")
+		BinaryOperator<String> join = (s1, s2) -> s1 + s2;
+		for (String word : words) {
+			joined = joined + word;
+		}
+		return joined;
+	}
+
+}
+
+class SimpleForEachLoops1 {
+
+	String join(List<String> words) {
+		String joined = "";
+		for (String word : words) {
+			joined = joined + word;
+		}
+		return joined;
+	}
+
 }
