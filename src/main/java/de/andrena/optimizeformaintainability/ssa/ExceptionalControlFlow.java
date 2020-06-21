@@ -38,7 +38,7 @@ public class ExceptionalControlFlow {
 
 }
 
-class ExceptionalControlFlow9 {
+class ExceptionalControlFlow11 {
 
 	int find(String needle, List<String> haystack) {
 		BiFunction<LoopItem<Integer>, String, LoopItem<Integer>> body = find(needle);
@@ -61,7 +61,7 @@ class ExceptionalControlFlow9 {
 
 }
 
-class ExceptionalControlFlow8 {
+class ExceptionalControlFlow10 {
 
 	int find(String needle, List<String> haystack) {
 		@SuppressWarnings("unused")
@@ -89,7 +89,7 @@ class ExceptionalControlFlow8 {
 
 }
 
-class ExceptionalControlFlow7 {
+class ExceptionalControlFlow9 {
 
 	int find(String needle, List<String> haystack) {
 		LoopItem<Integer> index = new LoopItem<>(0);
@@ -109,7 +109,7 @@ class ExceptionalControlFlow7 {
 
 }
 
-class ExceptionalControlFlow6 {
+class ExceptionalControlFlow8 {
 
 	int find(String needle, List<String> haystack) {
 		LoopItem<Integer> index = new LoopItem<>(0);
@@ -132,6 +132,46 @@ class ExceptionalControlFlow6 {
 
 }
 
+class ExceptionalControlFlow7 {
+
+	int find(String needle, List<String> haystack) {
+		LoopItem<Integer> index = new LoopItem<>(0);
+		for (String item : haystack) {
+			LoopItem<Integer> index2 = index;
+			if (needle.equals(item)) {
+				index2 = index.ret();
+			} else {
+				index2 = index.map(val -> val + 1);
+			}
+			index = index2;
+		}
+		return index.value();
+	}
+
+}
+
+class ExceptionalControlFlow6 {
+
+	int find(String needle, List<String> haystack) {
+		LoopItem<Integer> index = new LoopItem<>(0);
+		for (String item : haystack) {
+			LoopItem<Integer> index2 = index;
+			if (needle.equals(item)) {
+				index2 = index.ret();
+			} else {
+				index2 = index.map(val -> val + 1);
+			}
+			index = index2;
+		}
+		if (index.returns()) {
+			return index.value();
+		} else {
+			return index.value();
+		}
+	}
+
+}
+
 class ExceptionalControlFlow5 {
 
 	int find(String needle, List<String> haystack) {
@@ -144,6 +184,9 @@ class ExceptionalControlFlow5 {
 				index2 = index.map(val -> val + 1);
 			}
 			index = index2;
+		}
+		if (index.returns()) { //trivial here but needed in general when statements follow the loop 
+			return index.value();
 		}
 		return index.value();
 	}

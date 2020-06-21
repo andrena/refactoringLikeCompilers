@@ -31,6 +31,10 @@ public class LoopItem<I> {
 		}
 	}
 
+	public boolean returns() {
+		return control == Control.RETURN;
+	}
+
 	public I value() {
 		if (exception != null) {
 			throw exception;
@@ -55,4 +59,5 @@ public class LoopItem<I> {
 			return this;
 		}
 	}
+
 }
